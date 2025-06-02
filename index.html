@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -48,15 +48,21 @@
   <div id="count">0 минут</div>
 
   <div id="reset-section">
-    <input type="password" id="password" placeholder="Введите пароль">
+    <input type="password" id="password" placeholder="Введите пароль" />
     <button onclick="checkPassword()">Скинуть наказание</button>
   </div>
 
   <script>
-    let totalSeconds = 0;
+    // Загружаем значение из localStorage или 0
+    let totalSeconds = parseInt(localStorage.getItem('tickleSeconds')) || 0;
 
     function addPunishment() {
-      totalSeconds += 30; // 30 секунд нажатие
+      totalSeconds += 30; // добавляем 30 секунд
+      saveAndUpdate();
+    }
+
+    function saveAndUpdate() {
+      localStorage.setItem('tickleSeconds', totalSeconds);
       updateDisplay();
     }
 
@@ -74,12 +80,15 @@
       const input = document.getElementById('password').value;
       if (input === "1313") {
         totalSeconds = 0;
-        updateDisplay();
+        saveAndUpdate();
         alert("Наказание скинуто 😇");
       } else {
         alert("Неверный пароль 😈");
       }
     }
+
+    // При загрузке страницы показываем текущее значение
+    updateDisplay();
   </script>
 
 </body>
